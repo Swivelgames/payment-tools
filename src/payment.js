@@ -88,7 +88,7 @@ export let validateCCExp = (exp) => {
 	} catch(e) { return false }
 
 	const now = new Date();
-	now.setMonth(now.getMonth() + 1);
+	now.setMonth(now.getMonth() - 1);
 	now.setHours(0,0,0,0);
 	now.setDate(1);
 
