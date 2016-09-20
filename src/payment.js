@@ -8,7 +8,7 @@ export let checkLength = (strLen, tests) => {
 }
 
 export let luhn = (num) => {
-	var digits = new String(num);
+	var digits = String(num).split('').reverse();
 
 	let sum = 0;
 	var odd = true
@@ -24,39 +24,40 @@ export let luhn = (num) => {
 
 export let findFullCardConfig = (num) => {
 	for(var type in cards) if(cards[type].pattern.test(num)) return [type, cards[type]]
-	return void 0;
+	return ['visa', cards.visa];
 };
 
 export let getCard = (num) => findFullCardConfig(num).pop();
-export let getType = (num) => findFullCardConfig(num).splice(0,1);
+export let getType = (num) => findFullCardConfig(num).splice(0,1).pop();
 
 
 // Formatters
 
 export let formatCCNum = (num) => {
+	if(!num) return '';
 	const cleanNum = num.replace(/\D/g,'');
-	const cfg = findFullCardConfig(cleanNum);
+	const cfg = getCard(cleanNum);
 	if(cfg === void 0) return cleanNum;
 	let parts = String(cleanNum).match(cfg.format);
-	return parts.splice(1).join(' ').trim() || cleanNum;
+	return parts.join(' ').trim() || cleanNum;
 };
 export let formatCCExp = (exp) => {
-	var ret = '';
+	if(!exp) return '';
 	const cleanExp = String(exp.replace(/\D/g,''));
-	if(cleanExp.length === 1 && parseInt(cleanExp[0], 10) > 1) {
-		ret = `0${cleanExp}`;
+	if(cleanExp.length === 1) {
+		if(parseInt(cleanExp[0], 10) > 1) return `0${cleanExp}`;
+		else return cleanExp;
 	}
-	if(cleanExp.length === 2) return `${ret} / `;
+	if(cleanExp.length === 2) return `${cleanExp} / `;
 	if(cleanExp.length > 2) return cleanExp.match(expFormat).splice(1).join(' / ') || cleanExp;
+	return cleanExp;
 };
-export let formatCCCVV = (cvv, type = false) => {
-	const cleanCvv = /^\d+$/.test(cvv);
-	if(type === false) return cleanCvv;
-	else if(typeof type === 'string') {
-		const typeCfg = cards[type];
-	} else {
-		const typeCfg = findFullCardConfig(type);
-	}
+export let formatCCCVV = (cvv, type = 'visa') => {
+	if(!cvv) return '';
+	var typeCfg;
+	const cleanCvv = cvv.replace(/\D/g,'');
+	if(typeof type === 'string') typeCfg = cards[type];
+	else typeCfg = getCard(type);
 	if(typeCfg === void 0) return cleanCvv;
 	if(String(cvv).length > typeCfg.cvvLength) return cleanCvv.substr(0,typeCfg.cvvLength);
 	return cleanCvv;
@@ -66,8 +67,8 @@ export let formatCCCVV = (cvv, type = false) => {
 // Validators
 
 export let validateCCNum = (num) => {
-	const strNum = String(num);
-	const cfg = findFullCardConfig(strNum);
+	const strNum = String(num).replace(/\D/g,'');
+	const cfg = getCard(strNum);
 	if(cfg === void 0) return false;
 	if(!checkLength(strNum.length,cfg.length)) return false;
 	if(cfg.luhn === true) return luhn(strNum);
@@ -91,10 +92,8 @@ export let validateCCExp = (exp) => {
 };
 
 export let validateCCCVV = (cvv, type) => {
-	if(typeof type === 'string') {
-		const typeCfg = cards[type];
-	} else {
-		const typeCfg = findFullCardConfig(type);
-	}
+	var typeCfg;
+	if(typeof type === 'string') typeCfg = cards[type];
+	else typeCfg = getCard(type);
 	return (String(cvv).length === typeCfg.cvvLength)
 };

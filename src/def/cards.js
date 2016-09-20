@@ -1,7 +1,7 @@
 export const defaultFormat = /(\d{1,4})/g;
 export const expFormat = /(\d{2})(\d{1,4})/;
 
-export default cards = {
+export const cards = {
 	'amex': {
 		pattern: /^3[47]/,
 		format: /(\d{1,4})(\d{1,6})?(\d{1,5})?/,

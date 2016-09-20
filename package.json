@@ -2,7 +2,7 @@
   "name": "payment-tools",
   "version": "1.0.0",
   "description": "Payment field validators and formatters",
-  "main": "index.js",
+  "main": "./lib/payment.js",
   "scripts": {
     "build": "node ./node_modules/babel-cli/bin/babel.js src --out-dir lib",
     "prepublish": "npm run build"
