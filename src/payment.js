@@ -54,10 +54,10 @@ export let formatCCExp = (exp) => {
 	if(cleanExp.length > 2) return cleanExp.match(expFormat).splice(1).join(' / ') || cleanExp;
 	return cleanExp;
 };
-export let formatCCCVV = (cvv, type = 'visa') => {
+export let formatCCCVV = (cvv, type = 'amex') => {
 	if(!cvv) return '';
 	var typeCfg;
-	if(!type) type = 'visa';
+	if(!type) type = 'amex';
 	const cleanCvv = cvv.replace(/\D/g,'');
 	if(typeof type === 'string') typeCfg = cards[type];
 	else typeCfg = getCard(type);
