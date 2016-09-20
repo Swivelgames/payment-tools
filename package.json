@@ -1,6 +1,6 @@
 {
   "name": "payment-tools",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Payment field validators and formatters",
   "author": "Joseph Dalrymple <me@swivel.in>",
   "license": "MIT",

@@ -45,11 +45,8 @@ export let formatCCNum = (num) => {
 };
 export let formatCCExp = (exp) => {
 	if(!exp) return '';
-	const cleanExp = String(exp.replace(/\D/g,''));
-	if(cleanExp.length === 1) {
-		if(parseInt(cleanExp[0], 10) > 1) return `0${cleanExp}`;
-		else return cleanExp;
-	}
+	var cleanExp = String(exp.replace(/\D/g,''));
+	if(parseInt(cleanExp[0], 10) > 1) cleanExp = `0${cleanExp}`;
 	if(cleanExp.length === 2) return `${cleanExp} / `;
 	if(cleanExp.length > 2) return cleanExp.match(expFormat).splice(1).join(' / ') || cleanExp;
 	return cleanExp;
