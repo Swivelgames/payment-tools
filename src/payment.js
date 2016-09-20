@@ -24,7 +24,8 @@ export let luhn = (num) => {
 };
 
 export let findFullCardConfig = (num) => {
-	for(var type in cards) if(cards[type].pattern.test(num)) return [type, cards[type]]
+	const cleanNum = String(num).replace(/\D/g,'');
+	for(var type in cards) if(cards[type].pattern.test(cleanNum)) return [type, cards[type]]
 	return ['visa', cards.visa];
 };
 
