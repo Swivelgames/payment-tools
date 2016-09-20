@@ -1,10 +1,10 @@
-export const defaultFormat = /(\d{1,4})/g;
+export const defaultFormat = /^(\d{4}|\d{1,3})(\d{4}|\d{1,3})?(\d{4}|\d{1,3})?(\d{4}|\d{1,3})?/;
 export const expFormat = /(\d{2})(\d{1,4})/;
 
 export const cards = {
 	'amex': {
 		pattern: /^3[47]/,
-		format: /(\d{1,4})(\d{1,6})?(\d{1,5})?/,
+		format: /^(\d{1,4})(\d{1,6})?(\d{1,5})?/,
 		length: [15],
 		cvvLength: 4,
 		luhn: true
@@ -18,7 +18,7 @@ export const cards = {
 	},
 	'dinersclub': {
 		pattern: /^(36|38|30[0-5])/,
-		format: /(\d{1,4})(\d{1,6})?(\d{1,4})?/,
+		format: /^(\d{1,4})(\d{1,6})?(\d{1,4})?/,
 		length: [14],
 		cvvLength: 3,
 		luhn: true

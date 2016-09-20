@@ -41,7 +41,7 @@ export let formatCCNum = (num) => {
 	const cfg = getCard(cleanNum);
 	if(cfg === void 0) return cleanNum;
 	let parts = String(cleanNum).match(cfg.format);
-	return parts.join(' ').trim() || cleanNum;
+	return (parts !== null) ? parts.splice(1).join(' ').trim() : cleanNum;
 };
 export let formatCCExp = (exp) => {
 	if(!exp) return '';
@@ -57,6 +57,7 @@ export let formatCCExp = (exp) => {
 export let formatCCCVV = (cvv, type = 'visa') => {
 	if(!cvv) return '';
 	var typeCfg;
+	if(!type) type = 'visa';
 	const cleanCvv = cvv.replace(/\D/g,'');
 	if(typeof type === 'string') typeCfg = cards[type];
 	else typeCfg = getCard(type);
@@ -82,7 +83,7 @@ export let validateCCExp = (exp) => {
 	var expDate;
 	try {
 		expDate = new Date(
-			formatCCExp(exp).split('/').join('/01/')
+			formatCCExp(exp).split('/').join('/01/').replace(/\s*/g,'')
 		);
 	} catch(e) { return false }
 
@@ -95,6 +96,7 @@ export let validateCCExp = (exp) => {
 
 export let validateCCCVV = (cvv, type) => {
 	var typeCfg;
+	if(!type) type = 'visa';
 	if(typeof type === 'string') typeCfg = cards[type];
 	else typeCfg = getCard(type);
 	return (String(cvv).length === typeCfg.cvvLength)
