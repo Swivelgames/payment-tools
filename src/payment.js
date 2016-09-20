@@ -3,6 +3,7 @@ import { cards, expFormat } from './def/cards.js';
 // Utilities
 
 export let checkLength = (strLen, tests) => {
+	if(isNaN(strLen)) return false;
 	for(let len of tests) if(strLen === len) return true;
 	return false;
 }
