@@ -2,6 +2,14 @@ export const defaultFormat = /^(\d{4}|\d{1,3})(\d{4}|\d{1,3})?(\d{4}|\d{1,3})?(\
 export const expFormat = /(\d{2})(\d{1,4})/;
 
 export const cards = {
+	'unidentified': {
+		fail: true,
+		pattern: /^$/,
+		format: defaultFormat,
+		length: [16],
+		cvvLength: 4,
+		luhn: true
+	},
 	'amex': {
 		pattern: /^3[47]/,
 		format: /^(\d{1,4})(\d{1,6})?(\d{1,5})?/,

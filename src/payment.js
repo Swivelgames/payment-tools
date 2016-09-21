@@ -26,7 +26,7 @@ export let luhn = (num) => {
 export let findFullCardConfig = (num) => {
 	const cleanNum = String(num).replace(/\D/g,'');
 	for(var type in cards) if(cards[type].pattern.test(cleanNum)) return [type, cards[type]]
-	return ['visa', cards.visa];
+	return ['unidentified', cards.unidentified];
 };
 
 export let getCard = (num) => findFullCardConfig(num).pop();
@@ -70,6 +70,7 @@ export let validateCCNum = (num) => {
 	const strNum = String(num).replace(/\D/g,'');
 	const cfg = getCard(strNum);
 	if(cfg === void 0) return false;
+	if(cfg.fail && cfg.fail === true) return false;
 	if(!checkLength(strNum.length,cfg.length)) return false;
 	if(cfg.luhn === true) return luhn(strNum);
 	return true;
@@ -94,7 +95,7 @@ export let validateCCExp = (exp) => {
 
 export let validateCCCVV = (cvv, type) => {
 	var typeCfg;
-	if(!type) type = 'visa';
+	if(!type) type = 'unidentified';
 	if(typeof type === 'string') typeCfg = cards[type];
 	else typeCfg = getCard(type);
 	return (String(cvv).length === typeCfg.cvvLength)
